@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankApp.Domain.Models
+namespace BankApp.Domain.Models.Dtos
 {
-    public class Admin
+    public class UserLoginDto
     {
-        public int Id { get; set; }
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
     }

@@ -15,8 +15,6 @@ namespace BankApp.Data.Repos
 
         public List<Customer> GetCustomerList()
         {
-            //Här ligger databasanrop
-
             return _db.Customers.ToList();
         }
     }

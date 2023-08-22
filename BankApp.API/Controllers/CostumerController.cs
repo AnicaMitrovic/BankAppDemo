@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BankApp.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
@@ -15,10 +16,10 @@ namespace BankApp.API.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok(_service.GetCustomerList());
-        }
+        //[HttpGet("GetAllCustomers")]
+        //public IActionResult Get()
+        //{
+        //    return Ok(_service.GetCustomerList());
+        //}
     }
 }

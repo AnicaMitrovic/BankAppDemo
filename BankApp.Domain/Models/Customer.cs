@@ -3,6 +3,8 @@
     public class Customer
     {
         public int CustomerId { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
         public string Givenname { get; set; } = string.Empty;
         public string Surname { get; set; } = string.Empty;
