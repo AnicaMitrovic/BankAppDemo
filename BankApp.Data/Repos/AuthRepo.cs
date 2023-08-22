@@ -32,7 +32,7 @@ namespace BankApp.Data.Repos
 
             if (username == "admin" && password == "admin")
             {
-                response.Data = CreateToken(0, username, UserRole.Customer);
+                response.Data = CreateToken(0, username, UserRole.Admin);
                 response.Success = true;
             }
             else
