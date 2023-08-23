@@ -26,9 +26,8 @@ namespace BankApp.API.Controllers
 
             if (rolesClaim != null)
             {
-                string roleValue = rolesClaim.Value; // This is the user's role value
-                                                     // Now you can use the roleValue to perform role-based logic
-                                                     // For example:
+                string roleValue = rolesClaim.Value;
+
                 if (roleValue == "Admin")
                 {
                     var response = _service.GetCustomerList();
