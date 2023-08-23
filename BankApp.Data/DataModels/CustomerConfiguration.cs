@@ -20,10 +20,6 @@ namespace BankApp.Data.DataModels
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-            builder.Property(e => e.Gender)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
             builder.Property(e => e.Givenname)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -32,28 +28,12 @@ namespace BankApp.Data.DataModels
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-            builder.Property(e => e.Streetaddress)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
             builder.Property(e => e.City)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-            builder.Property(e => e.Zipcode)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
             builder.Property(e => e.Country)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
-
-            builder.Property(e => e.CountryCode)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-            builder.Property(e => e.TelephoneCountryCode)
-                    .HasMaxLength(10)
                     .IsUnicode(false);
 
             builder.Property(e => e.TelephoneNumber)
