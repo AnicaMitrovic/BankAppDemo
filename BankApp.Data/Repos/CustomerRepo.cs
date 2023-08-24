@@ -1,21 +1,46 @@
-﻿using BankApp.Data.DataModels;
+﻿using AutoMapper;
+using BankApp.Data.DataModels;
 using BankApp.Data.Interfaces;
 using BankApp.Domain.Models;
+using BankApp.Domain.Models.Dtos;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace BankApp.Data.Repos
 {
     public class CustomerRepo : ICustomerRepo
     {
         private readonly BankAppDBContext _db;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IMapper _mapper;
 
-        public CustomerRepo(BankAppDBContext db)
+        public CustomerRepo(BankAppDBContext db, IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
             _db = db;
+            _httpContextAccessor = httpContextAccessor;
+            _mapper = mapper;
         }
 
-        public List<Customer> GetCustomerList()
+        public async Task<ServiceResponse<List<Customer>>> AddNewCustomer(CustomerCreateDto newCustomer)
         {
-            return _db.Customers.ToList();
+            var response = new ServiceResponse<List<Customer>>();
+            var character = _mapper.Map<Customer>(newCustomer);
+
+            _db.Customers.Add(character);
+            await _db.SaveChangesAsync();
+
+            response.Data = await _db.Customers.ToListAsync();
+            response.Success = true;
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<Customer>>> GetCustomerList()
+        {
+            var response = new ServiceResponse<List<Customer>>();
+            response.Data = await _db.Customers.ToListAsync();
+            response.Success = true;
+            return response;
         }
     }
 }

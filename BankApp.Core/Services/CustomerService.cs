@@ -1,6 +1,7 @@
 ﻿using BankApp.Core.Interfaces;
 using BankApp.Data.Interfaces;
 using BankApp.Domain.Models;
+using BankApp.Domain.Models.Dtos;
 
 namespace BankApp.Core.Services
 {
@@ -13,10 +14,14 @@ namespace BankApp.Core.Services
             _repo=repo;
         }
 
-        //Business logic for Customer
-        public List<Customer> GetCustomerList()
+        public async Task<ServiceResponse<List<Customer>>> AddNewCustomer(CustomerCreateDto customer)
         {
-            return _repo.GetCustomerList();
+            return await _repo.AddNewCustomer(customer);
+        }
+
+        public async Task<ServiceResponse<List<Customer>>> GetCustomerList()
+        {
+            return await _repo.GetCustomerList();
         }
     }
 }

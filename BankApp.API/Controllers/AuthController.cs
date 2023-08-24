@@ -28,6 +28,5 @@ namespace BankApp.API.Controllers
             }
             return Ok(response);
         }
-
     }
 }
