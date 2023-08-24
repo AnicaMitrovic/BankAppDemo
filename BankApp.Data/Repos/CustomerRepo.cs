@@ -20,6 +20,11 @@ namespace BankApp.Data.Repos
             _mapper = mapper;
         }
 
+        public async Task<int> LastAddedCustomerId()
+        {
+            return await _db.Customers.MaxAsync(c => c.CustomerId);
+        }
+
         public async Task<ServiceResponse<List<Customer>>> AddNewCustomer(CustomerCreateDto newCustomer)
         {
             var response = new ServiceResponse<List<Customer>>();
@@ -36,7 +41,7 @@ namespace BankApp.Data.Repos
         public async Task<ServiceResponse<List<Customer>>> GetCustomerList()
         {
             var response = new ServiceResponse<List<Customer>>();
-            response.Data = await _db.Customers.ToListAsync();
+            response.Data = await _db.Customers.Include(c => c.BankAccounts).ToListAsync();
             response.Success = true;
             return response;
         }

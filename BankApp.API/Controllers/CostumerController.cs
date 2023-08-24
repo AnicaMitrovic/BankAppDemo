@@ -13,12 +13,14 @@ namespace BankApp.API.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _service;
+        private readonly IBankAccountService _bankAccService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CustomerController(ICustomerService service, IHttpContextAccessor httpContextAccessor)
+        public CustomerController(ICustomerService service, IHttpContextAccessor httpContextAccessor, IBankAccountService bankAccountService)
         {
             _service = service;
-            _httpContextAccessor = httpContextAccessor; 
+            _httpContextAccessor = httpContextAccessor;
+            _bankAccService = bankAccountService;
         }
 
         // we use this method in get all Bank accounts for this user
@@ -58,6 +60,13 @@ namespace BankApp.API.Controllers
                     if (roleValue == "Admin")
                     {
                         var response = await _service.AddNewCustomer(customer);
+
+                        var newBancAcc = new BankAccountCreateDto()
+                        {
+                            Type = "personal",
+                            Balance = 0
+                        };
+
                         return Ok(response);
                     }
                 }
