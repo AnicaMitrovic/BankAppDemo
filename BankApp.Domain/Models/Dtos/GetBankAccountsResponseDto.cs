@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankApp.Domain.Models
+namespace BankApp.Domain.Models.Dtos
 {
-    public class BankAccount
+    public class GetBankAccountsResponseDto
     {
-        public int Id { get; set; }
         public string Type { get; set; } = string.Empty;
         public int Balance { get; set; }
-        public int CustomerId { get; set; }
-        public Customer? Customer { get;}
     }
 }

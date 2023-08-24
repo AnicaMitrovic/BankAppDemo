@@ -25,8 +25,6 @@ namespace BankApp.API.Controllers
         private int GetLoggedInCustomerId() => int.Parse(_httpContextAccessor.HttpContext!.User
             .FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-
-
         [HttpGet("GetAllCustomers")]
         public async Task<ActionResult<ServiceResponse<List<Customer>>>> GetAllCustomers()
         {

@@ -7,6 +7,5 @@ namespace BankApp.Data.Interfaces
     {
         Task<ServiceResponse<List<Customer>>> AddNewCustomer(CustomerCreateDto customer);
         Task<ServiceResponse<List<Customer>>> GetCustomerList();
-
     }
 }

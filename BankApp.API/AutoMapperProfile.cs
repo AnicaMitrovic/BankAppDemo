@@ -9,6 +9,7 @@ namespace BankApp.API
         public AutoMapperProfile()
         {
             CreateMap<CustomerCreateDto, Customer>();
+            CreateMap<BankAccount, GetBankAccountsResponseDto>();
         }
     }
 }
