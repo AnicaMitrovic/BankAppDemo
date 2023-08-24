@@ -13,11 +13,19 @@ namespace BankApp.API.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _service;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CustomerController(ICustomerService service)
+        public CustomerController(ICustomerService service, IHttpContextAccessor httpContextAccessor)
         {
             _service = service;
+            _httpContextAccessor = httpContextAccessor; 
         }
+
+        // we use this method in get all Bank accounts for this user
+        private int GetLoggedInCustomerId() => int.Parse(_httpContextAccessor.HttpContext!.User
+            .FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+
 
         [HttpGet("GetAllCustomers")]
         public async Task<ActionResult<ServiceResponse<List<Customer>>>> GetAllCustomers()

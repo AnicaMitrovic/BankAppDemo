@@ -11,5 +11,6 @@
         public string Country { get; set; } = string.Empty;
         public string TelephoneNumber { get; set; } = string.Empty;
         public string EmailAddress { get; set; } = string.Empty;
+        public List<BankAccount>? BankAccounts { get; set; }
     }
 }

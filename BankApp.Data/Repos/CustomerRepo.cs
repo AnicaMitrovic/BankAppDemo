@@ -12,13 +12,11 @@ namespace BankApp.Data.Repos
     public class CustomerRepo : ICustomerRepo
     {
         private readonly BankAppDBContext _db;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
 
-        public CustomerRepo(BankAppDBContext db, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+        public CustomerRepo(BankAppDBContext db,IMapper mapper)
         {
             _db = db;
-            _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
         }
 
