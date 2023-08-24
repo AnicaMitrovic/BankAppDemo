@@ -23,6 +23,23 @@ namespace BankApp.Data.Repos
             _mapper = mapper;
         }
 
+        public async Task<ServiceResponse<List<GetBankAccountsResponseDto>>> AddNewBankAccount(BankAccountCreateDto newBankAccount, int customerId)
+        {
+            var response = new ServiceResponse<List<GetBankAccountsResponseDto>>();
+            var bankAccount = _mapper.Map<BankAccount>(newBankAccount);
+            bankAccount.Customer = await _db.Customers.FirstOrDefaultAsync(c => c.CustomerId == customerId);
+
+            _db.BankAccounts.Add(bankAccount);
+            await _db.SaveChangesAsync();
+
+            response.Data =
+                await _db.BankAccounts
+                    .Where(ac => ac.CustomerId == customerId)
+                    .Select(c => _mapper.Map<GetBankAccountsResponseDto>(c))
+                    .ToListAsync();
+            return response;
+        }
+
         public async Task<ServiceResponse<List<GetBankAccountsResponseDto>>> GetBankAccountsByCustomerId(int customerId)
         {
             var response = new ServiceResponse<List<GetBankAccountsResponseDto>>();

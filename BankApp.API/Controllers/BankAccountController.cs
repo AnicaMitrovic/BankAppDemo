@@ -34,7 +34,7 @@ namespace BankApp.API.Controllers
             string roleValue = GetLoggedInUserRole();
             if (roleValue == "Admin")
             {
-                return Ok("You are logged in as admin and you cannot have bank accounts.");
+                return StatusCode(401, "You are logged in as admin and you don´t have your bank accounts.");
             }
             if (roleValue == "Customer")
             {
@@ -44,6 +44,31 @@ namespace BankApp.API.Controllers
             }
 
             return Unauthorized();
+        }
+
+        [HttpPost("AddNewBankAccount")]
+        public async Task<ActionResult<ServiceResponse<List<GetBankAccountsResponseDto>>>> AddNewBankAccount(BankAccountCreateDto bankAccount)
+        {
+            try
+            {
+                string roleValue = GetLoggedInUserRole();
+                if (roleValue == "Admin")
+                {
+                    return Ok();
+                }
+                if (roleValue == "Customer")
+                {
+                    var customerId = GetLoggedInCustomerId();
+                    var response = await _service.AddNewBankAccount(bankAccount, customerId);
+                    return Ok(response);
+                }
+
+                return Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

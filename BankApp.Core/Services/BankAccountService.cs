@@ -19,6 +19,11 @@ namespace BankApp.Core.Services
             _repo = repo;
         }
 
+        public async Task<ServiceResponse<List<GetBankAccountsResponseDto>>> AddNewBankAccount(BankAccountCreateDto bankAccount, int customerId)
+        {
+            return await _repo.AddNewBankAccount(bankAccount, customerId);
+        }
+
         public async Task<ServiceResponse<List<GetBankAccountsResponseDto>>> GetBankAccountsByCustomerId(int customerId)
         {
             return await _repo.GetBankAccountsByCustomerId(customerId);

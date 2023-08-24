@@ -11,5 +11,6 @@ namespace BankApp.Core.Interfaces
     public interface IBankAccountService
     {
         Task<ServiceResponse<List<GetBankAccountsResponseDto>>> GetBankAccountsByCustomerId(int customerId);
+        Task<ServiceResponse<List<GetBankAccountsResponseDto>>> AddNewBankAccount(BankAccountCreateDto bankAccount, int customerId);
     }
 }

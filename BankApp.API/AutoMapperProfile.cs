@@ -10,6 +10,7 @@ namespace BankApp.API
         {
             CreateMap<CustomerCreateDto, Customer>();
             CreateMap<BankAccount, GetBankAccountsResponseDto>();
+            CreateMap<BankAccountCreateDto, BankAccount>();
         }
     }
 }
