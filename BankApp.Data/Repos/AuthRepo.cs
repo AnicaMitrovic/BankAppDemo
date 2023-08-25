@@ -35,26 +35,9 @@ namespace BankApp.Data.Repos
             }
             else
             {
-                var user = await _context.Customers
-                .FirstOrDefaultAsync(u => u.Username.ToLower().Equals(username.ToLower()));
-
-                if (user is null)
-                {
-                    response.Success = false;
-                    response.Message = "User not found. Wrong username or password.";
-                }
-                else if (password != user.Password)
-                {
-                    response.Success = false;
-                    response.Message = "User not found. Wrong username or password.";
-                }
-                else
-                {
-                    response.Data = CreateToken(user.CustomerId, user.Username, UserRole.Customer);
-                    response.Success = true;
-                }
+                response.Success = false;
+                response.Message = "User not found. Wrong username or password.";
             }
-            
             return response;
         }
 
