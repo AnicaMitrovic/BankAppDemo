@@ -60,12 +60,6 @@ namespace BankApp.API.Controllers
                     {
                         var response = await _service.AddNewCustomer(customer);
 
-                        var newBancAcc = new BankAccountCreateDto()
-                        {
-                            Type = "personal",
-                            Balance = 0
-                        };
-
                         return Ok(response);
                     }
                 }
