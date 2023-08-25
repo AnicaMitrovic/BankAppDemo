@@ -48,7 +48,6 @@ namespace BankApp.Data.Repos
                 .Where(ac => ac.CustomerId == customerId).ToListAsync(); //only receive the accounts that belong to the logged in Customer
 
             response.Data = dbBankAccounts.Select(acc => _mapper.Map<GetBankAccountsResponseDto>(acc)).ToList();
-            //response.Data = dbBankAccounts.ToList();
             return response;
         }
 
