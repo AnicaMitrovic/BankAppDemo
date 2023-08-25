@@ -77,8 +77,39 @@ namespace BankApp.API.Controllers
             {
                 return NotFound(response);
             }
+            else
+            {
+                return Ok(response);
+            }
+        }
 
-            return Ok(response);
+        [HttpPut("TransferLoan")]
+        public async Task<ActionResult<ServiceResponse<GetBankAccountsResponseDto>>> TransferLoan(LoanDto loanDto)
+        {
+            try
+            {
+                string roleValue = GetLoggedInUserRole();
+                if (roleValue == "Admin")
+                {
+                    var customerId = GetLoggedInCustomerId();
+                    var response = await _service.TransferLoan(loanDto);
+
+                    if (response.Data is null)
+                    {
+                        return NotFound(response);
+                    }
+                    else
+                    {
+                        return Ok(response);
+                    }
+                }
+
+                return Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

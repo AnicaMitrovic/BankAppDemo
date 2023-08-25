@@ -29,6 +29,11 @@ namespace BankApp.Core.Services
             return await _repo.GetBankAccountsByCustomerId(customerId);
         }
 
+        public async Task<ServiceResponse<GetBankAccountsResponseDto>> TransferLoan(LoanDto loanDto)
+        {
+            return await _repo.TransferLoan(loanDto);
+        }
+
         public async Task<ServiceResponse<GetBankAccountsResponseDto>> UpdateBankAccountBalance(TransferMoneyDto transferMoneyDto, int customerId)
         {
             return await _repo.UpdateBankAccountBalance(transferMoneyDto, customerId);

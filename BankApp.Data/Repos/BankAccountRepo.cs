@@ -51,6 +51,35 @@ namespace BankApp.Data.Repos
             return response;
         }
 
+        public async Task<ServiceResponse<GetBankAccountsResponseDto>> TransferLoan(LoanDto loanDto)
+        {
+            var response = new ServiceResponse<GetBankAccountsResponseDto>();
+
+            try
+            {
+                var accountTo = await _db.BankAccounts
+                    .FirstOrDefaultAsync(ac => ac.CustomerId == loanDto.CustomerId);
+
+                if (accountTo == null)
+                {
+                    throw new Exception($"Bank Account for the Customer with Id {loanDto.CustomerId} not found.");
+                }
+
+                accountTo.Balance = accountTo.Balance + loanDto.Amount;
+
+                await _db.SaveChangesAsync();
+                response.Data = _mapper.Map<GetBankAccountsResponseDto>(accountTo);
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+
+        }
+
         public async Task<ServiceResponse<GetBankAccountsResponseDto>> UpdateBankAccountBalance(TransferMoneyDto transferMoneyDto, int customerId)
         {
             var response = new ServiceResponse<GetBankAccountsResponseDto>();

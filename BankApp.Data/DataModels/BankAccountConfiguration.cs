@@ -26,7 +26,7 @@ namespace BankApp.Data.DataModels
             // Define relationships
             builder.HasOne(e => e.Customer)
                .WithMany(c => c.BankAccounts)
-               .HasForeignKey(e => e.CustomerId)  // Use the correct foreign key property
+               .HasForeignKey(e => e.CustomerId)
                .OnDelete(DeleteBehavior.SetNull);
         }
     }
