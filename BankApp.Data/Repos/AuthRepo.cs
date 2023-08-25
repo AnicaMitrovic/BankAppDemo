@@ -32,13 +32,14 @@ namespace BankApp.Data.Repos
             {
                 response.Data = CreateToken(0, username, UserRole.Admin);
                 response.Success = true;
+                return response;
             }
-            var userToLogin = _context.Customers.Where(user => user.Username == username).FirstOrDefault();
+            var userToLogin = await _context.Customers.Where(user => user.Username == username).FirstOrDefaultAsync();
 
             if (userToLogin != null)
             {
                 if(userToLogin.Password == password) {
-                    response.Data = CreateToken(0, username, UserRole.Customer);
+                    response.Data = CreateToken(userToLogin.CustomerId, username, UserRole.Customer);
                     response.Success = true;
                 }
                 else
