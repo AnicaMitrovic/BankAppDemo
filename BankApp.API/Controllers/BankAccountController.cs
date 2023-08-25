@@ -52,10 +52,6 @@ namespace BankApp.API.Controllers
             try
             {
                 string roleValue = GetLoggedInUserRole();
-                if (roleValue == "Admin")
-                {
-                    return Ok();
-                }
                 if (roleValue == "Customer")
                 {
                     var customerId = GetLoggedInCustomerId();
@@ -69,6 +65,20 @@ namespace BankApp.API.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
+        }
+
+        [HttpPut("UpdateBankAccountBalance")]
+        public async Task<ActionResult<ServiceResponse<GetBankAccountsResponseDto>>> UpdateBankAccountBalance(TransferMoneyDto transferMoneyDto)
+        {
+            var customerId = GetLoggedInCustomerId();
+            var response = await _service.UpdateBankAccountBalance(transferMoneyDto, customerId);
+
+            if (response.Data is null)
+            {
+                return NotFound(response);
+            }
+
+            return Ok(response);
         }
     }
 }

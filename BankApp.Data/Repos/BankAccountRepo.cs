@@ -51,5 +51,45 @@ namespace BankApp.Data.Repos
             //response.Data = dbBankAccounts.ToList();
             return response;
         }
+
+        public async Task<ServiceResponse<GetBankAccountsResponseDto>> UpdateBankAccountBalance(TransferMoneyDto transferMoneyDto, int customerId)
+        {
+            var response = new ServiceResponse<GetBankAccountsResponseDto>();
+
+            try
+            {
+                var accountFrom = await _db.BankAccounts
+                    //.Include(ac => ac.Customer)
+                    .FirstOrDefaultAsync(ac => ac.Id == transferMoneyDto.BankAccountFromId && ac.CustomerId == customerId);
+
+                var accountTo = await _db.BankAccounts
+                    .FirstOrDefaultAsync(ac => ac.Id == transferMoneyDto.BankAccountToId);
+
+                if (accountFrom is null || accountTo == null || accountFrom.CustomerId != customerId)
+                {
+                    throw new Exception("Bank account number not found.");
+                }
+
+                if(accountFrom.Balance - transferMoneyDto.Amount < 0)
+                {
+                    throw new Exception("Not enough funds in account.");
+                }
+
+                accountFrom.Balance = accountFrom.Balance - transferMoneyDto.Amount;
+                accountTo.Balance = accountTo.Balance + transferMoneyDto.Amount;
+
+                await _db.SaveChangesAsync();
+                response.Data = _mapper.Map<GetBankAccountsResponseDto>(accountFrom);
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            //response.Success = true;
+            //response.Message = "Bank account balance has been updated.";
+            return response;
+        }
     }
 }
