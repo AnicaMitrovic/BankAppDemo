@@ -13,5 +13,6 @@ namespace BankApp.Domain.Models
         public int Balance { get; set; }
         public int CustomerId { get; set; }
         public Customer? Customer { get; set; }
+        public List<Transactions>? Transactions { get; set; }
     }
 }

@@ -67,6 +67,16 @@ namespace BankApp.Data.Repos
 
                 accountTo.Balance = accountTo.Balance + loanDto.Amount;
 
+                var newTransaction = new Transactions()
+                {
+                    BankAccountId = accountTo.Id,
+                    Amount = loanDto.Amount,
+                    Type = "loan",
+                    TransactionDate = DateTime.UtcNow
+                };
+
+                _db.Transactions.Add(newTransaction);
+
                 await _db.SaveChangesAsync();
                 response.Data = _mapper.Map<GetBankAccountsResponseDto>(accountTo);
             }
@@ -77,7 +87,6 @@ namespace BankApp.Data.Repos
             }
 
             return response;
-
         }
 
         public async Task<ServiceResponse<GetBankAccountsResponseDto>> UpdateBankAccountBalance(TransferMoneyDto transferMoneyDto, int customerId)
@@ -104,6 +113,26 @@ namespace BankApp.Data.Repos
 
                 accountFrom.Balance = accountFrom.Balance - transferMoneyDto.Amount;
                 accountTo.Balance = accountTo.Balance + transferMoneyDto.Amount;
+
+                var newTransactionFrom = new Transactions()
+                {
+                    BankAccountId = accountFrom.Id,
+                    Amount = transferMoneyDto.Amount,
+                    Type = "outflow",
+                    TransactionDate = DateTime.UtcNow
+                };
+
+                _db.Transactions.Add(newTransactionFrom);
+
+                var newTransactionTo = new Transactions()
+                {
+                    BankAccountId = accountTo.Id,
+                    Amount = transferMoneyDto.Amount,
+                    Type = "inflow",
+                    TransactionDate = DateTime.UtcNow
+                };
+
+                _db.Transactions.Add(newTransactionTo);
 
                 await _db.SaveChangesAsync();
                 response.Data = _mapper.Map<GetBankAccountsResponseDto>(accountFrom);

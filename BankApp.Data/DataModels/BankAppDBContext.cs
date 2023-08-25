@@ -20,11 +20,13 @@ namespace BankApp.Data.DataModels
        // public DbSet<Customer> Customers => Set<Customer>();
         public virtual DbSet<Customer> Customers { get; set; } = null!;
         public virtual DbSet<BankAccount> BankAccounts { get; set; } = null!;
+        public virtual DbSet<Transactions> Transactions { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CustomerConfiguration());
             modelBuilder.ApplyConfiguration(new BankAccountConfiguration());
+            modelBuilder.ApplyConfiguration(new TransactionsConfiguration());
 
             OnModelCreatingPartial(modelBuilder);
         }
