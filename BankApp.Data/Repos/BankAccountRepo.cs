@@ -59,7 +59,6 @@ namespace BankApp.Data.Repos
             try
             {
                 var accountFrom = await _db.BankAccounts
-                    //.Include(ac => ac.Customer)
                     .FirstOrDefaultAsync(ac => ac.Id == transferMoneyDto.BankAccountFromId && ac.CustomerId == customerId);
 
                 var accountTo = await _db.BankAccounts
@@ -87,8 +86,6 @@ namespace BankApp.Data.Repos
                 response.Message = ex.Message;
             }
 
-            //response.Success = true;
-            //response.Message = "Bank account balance has been updated.";
             return response;
         }
     }
