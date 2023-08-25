@@ -32,7 +32,14 @@ namespace BankApp.API.Controllers
                 if (roleValue == "Admin")
                 {
                     var response = await _service.GetCustomerList();
-                    return Ok(response);
+                    if (response.Success)
+                    {
+                        return Ok(response);
+                    } else
+                    {
+                        return BadRequest(response.Message);
+                    }
+                    
                 }
             }
             return Unauthorized();

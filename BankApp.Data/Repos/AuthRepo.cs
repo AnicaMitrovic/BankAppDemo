@@ -33,10 +33,23 @@ namespace BankApp.Data.Repos
                 response.Data = CreateToken(0, username, UserRole.Admin);
                 response.Success = true;
             }
-            else
+            var userToLogin = _context.Customers.Where(user => user.Username == username).FirstOrDefault();
+
+            if (userToLogin != null)
+            {
+                if(userToLogin.Password == password) {
+                    response.Data = CreateToken(0, username, UserRole.Customer);
+                    response.Success = true;
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Message = "User not found. Wrong username or password.";
+                }
+            } else
             {
                 response.Success = false;
-                response.Message = "User not found. Wrong username or password.";
+                response.Message = "User not found, please register this user using a Admin account";
             }
             return response;
         }
